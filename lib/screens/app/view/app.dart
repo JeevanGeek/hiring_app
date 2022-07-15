@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hiring_app/routes/app_route.dart';
+import 'package:hiring_app/utils/colors.dart';
 import 'package:hiring_app/utils/strings.dart';
 
 class HiringApp extends StatelessWidget {
@@ -15,7 +16,30 @@ class HiringApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         fontFamily: 'Helvetica',
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blue,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsets>(
+              const EdgeInsets.all(16.0),
+            ),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(AppColors.primary2),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsets>(
+              const EdgeInsets.all(16.0),
+            ),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(AppColors.primary9),
+          ),
+        ),
       ),
     );
   }
