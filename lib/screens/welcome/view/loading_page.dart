@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/routes/routes.dart';
-import 'package:hiring_app/screens/loading/loading.dart';
+import 'package:hiring_app/screens/welcome/welcome.dart';
 import 'package:hiring_app/utils/size_config.dart';
 import 'package:hiring_app/widgets/widgets.dart';
 
@@ -11,7 +11,7 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoadingCubit()..getStatus(),
+      create: (context) => WelcomeCubit()..getStatus(),
       child: const LoadingView(),
     );
   }
@@ -24,7 +24,7 @@ class LoadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      body: BlocListener<LoadingCubit, LoadingState>(
+      body: BlocListener<WelcomeCubit, WelcomeState>(
         listener: (context, state) {
           if (state is LoggedIn) {
             Navigator.pushNamedAndRemoveUntil(
@@ -32,7 +32,7 @@ class LoadingView extends StatelessWidget {
               Routes.home,
               (route) => false,
             );
-          } else if (state is NotLoggedIn) {
+          } else if (state is LoggedOut) {
             Navigator.pushNamedAndRemoveUntil(
               context,
               Routes.onboarding,
