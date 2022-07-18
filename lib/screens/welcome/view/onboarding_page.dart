@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/routes/routes.dart';
-import 'package:hiring_app/screens/onboarding/onboarding.dart';
 import 'package:hiring_app/utils/constants.dart';
 import 'package:hiring_app/utils/images.dart';
 import 'package:hiring_app/utils/strings.dart';
 import 'package:hiring_app/utils/styles.dart';
-
-class OnboardingPage extends StatelessWidget {
-  const OnboardingPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => OnboardingBloc(),
-      child: const OnboardingView(),
-    );
-  }
-}
+import 'package:hiring_app/widgets/buttons.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({Key? key}) : super(key: key);
@@ -44,12 +31,19 @@ class OnboardingView extends StatelessWidget {
                 style: AppStyles.primary3Bold20,
               ),
               const Spacer(flex: 2),
-              CircleAvatar(
-                backgroundImage: const AssetImage(AppImages.onboarding),
-                radius: AppConstants.x7,
+              TweenAnimationBuilder(
+                tween: Tween(
+                  begin: AppConstants.x0,
+                  end: AppConstants.x7,
+                ),
+                duration: const Duration(microseconds: 1),
+                builder: (_, double value, __) => CircleAvatar(
+                  backgroundImage: const AssetImage(AppImages.onboarding),
+                  radius: value,
+                ),
               ),
               const Spacer(flex: 2),
-              ElevatedButton(
+              PrimaryButton(
                 onPressed: () {
                   Navigator.pushNamed(context, Routes.register);
                 },
@@ -60,9 +54,9 @@ class OnboardingView extends StatelessWidget {
                 ),
               ),
               SizedBox(height: AppConstants.x4),
-              OutlinedButton(
+              SecondaryButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, Routes.signIn);
+                  Navigator.pushNamed(context, Routes.login);
                 },
                 child: Text(
                   AppStrings.alreadyHaveAccount,

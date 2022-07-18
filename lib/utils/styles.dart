@@ -66,4 +66,10 @@ class AppStyles {
     fontWeight: FontWeight.normal,
     fontSize: 16.toFont,
   );
+
+  static TextStyle redBold16 = TextStyle(
+    color: AppColors.red,
+    fontWeight: FontWeight.bold,
+    fontSize: 16.toFont,
+  );
 }
