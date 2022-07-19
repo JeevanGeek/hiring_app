@@ -39,7 +39,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 SizedBox(height: AppConstants.x5),
                 Text(
-                  Auth().user.email,
+                  Auth().user?.email ?? '',
                   style: AppStyles.primary2Bold25,
                 ),
                 const Spacer(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hiring_app/routes/routes.dart';
 import 'package:hiring_app/utils/constants.dart';
 import 'package:hiring_app/utils/images.dart';
+import 'package:hiring_app/utils/size_config.dart';
 import 'package:hiring_app/utils/strings.dart';
 import 'package:hiring_app/utils/styles.dart';
 import 'package:hiring_app/widgets/buttons.dart';
@@ -11,6 +12,7 @@ class OnboardingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(

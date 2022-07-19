@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  cloud_firestore: ^3.3.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
   firebase_auth: ^3.4.2
