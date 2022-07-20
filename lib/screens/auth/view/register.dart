@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hiring_app/data/role.dart';
+import 'package:hiring_app/data/static_data.dart';
 import 'package:hiring_app/routes/routes.dart';
 import 'package:hiring_app/screens/auth/auth.dart';
 import 'package:hiring_app/utils/colors.dart';
@@ -79,7 +79,7 @@ class RegisterView extends StatelessWidget {
                       SizedBox(height: AppConstants.x4),
                       DropdownButtonFormField<String>(
                         validator: (value) => Validator.validate(value),
-                        items: Role.roles
+                        items: StaticData.role
                             .map(
                               (e) => DropdownMenuItem<String>(
                                 value: e,

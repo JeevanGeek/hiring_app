@@ -6,3 +6,7 @@ abstract class RecruiterEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SaveRecruiterProfile extends RecruiterEvent {
+  const SaveRecruiterProfile();
+}

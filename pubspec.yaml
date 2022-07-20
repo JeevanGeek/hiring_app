@@ -18,7 +18,6 @@ dependencies:
   firebase_auth: ^3.4.2
   firebase_core: ^1.19.2
   flutter_bloc: ^8.0.1
-  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

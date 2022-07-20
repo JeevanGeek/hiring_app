@@ -15,4 +15,20 @@ class AppConstants {
   static double x7 = min(128.0.toHeight, 128.0.toWidth);
   static double x8 = min(256.0.toHeight, 256.0.toWidth);
   static double x9 = min(512.0.toHeight, 512.0.toWidth);
+
+  static const String role = 'role';
+  static const String email = 'email';
+  static const String isActive = 'isActive';
+  static const String createdAt = 'createdAt';
+  static const String name = 'name';
+  static const String phone = 'phone';
+  static const String iAm = 'iAm';
+  static const String gender = 'gender';
+  static const String city = 'city';
+  static const String dob = 'dob';
+  static const String updatedAt = 'updatedAt';
+  static const String sector = 'sector';
+  static const String company = 'company';
+  static const String website = 'website';
+  static const String users = 'users';
 }

@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/services/auth.dart';
 import 'package:hiring_app/services/db.dart';
-import 'package:hiring_app/utils/storage.dart';
 import 'package:hiring_app/utils/strings.dart';
 
 part 'auth_event.dart';
@@ -26,8 +25,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emailController.text,
           passwordController.text,
         );
-        await Db().addUser(role);
-        await Storage.setRole(role);
+        await Db().addUser(
+          role,
+          emailController.text,
+        );
+        await Db().getProfile();
         emit(const LoggedIn());
       } catch (e) {
         emit(ShowError(e));
@@ -41,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emailController.text,
           passwordController.text,
         );
-        await Storage.setRole(await Db().getRole());
+        await Db().getProfile();
         emit(const LoggedIn());
       } catch (e) {
         emit(ShowError(e));
@@ -84,7 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> clear() async {
-    await Storage.clear();
+    emailController.clear();
+    passwordController.clear();
   }
 
   @override

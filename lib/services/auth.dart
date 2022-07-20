@@ -7,7 +7,7 @@ class Auth {
   factory Auth() => _instance;
 
   User? get user => FirebaseAuth.instance.currentUser;
-  get isLoggedIn => user != null;
+  bool get isLoggedIn => user != null;
 
   Future<void> register(String email, String password) async {
     try {

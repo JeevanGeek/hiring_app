@@ -4,7 +4,8 @@ import 'package:hiring_app/screens/auth/auth.dart';
 import 'package:hiring_app/screens/candidate/candidate.dart';
 import 'package:hiring_app/screens/recruiter/recruiter.dart';
 import 'package:hiring_app/screens/welcome/welcome.dart';
-import 'package:hiring_app/utils/storage.dart';
+import 'package:hiring_app/services/db.dart';
+import 'package:hiring_app/utils/constants.dart';
 import 'package:hiring_app/utils/strings.dart';
 
 class AppRoute {
@@ -19,14 +20,21 @@ class AppRoute {
     Routes.login: (context) => const LoginView(),
     Routes.forgotPassword: (context) => const ForgotPasswordView(),
     Routes.home: (context) {
-      switch (Storage.getRole()) {
-        case AppStrings.candidate:
-          return const CandidatePage();
-        case AppStrings.recruiter:
-          return const RecruiterPage();
-        default:
-          return const OnboardingView();
+      if (Db().isUserExists) {
+        switch (Db().profile?.get(AppConstants.role)) {
+          case AppStrings.candidate:
+            if (Db().isProfileExists) {
+              return const CandidatePage();
+            }
+            return const CandidateEditPage();
+          case AppStrings.recruiter:
+            if (Db().isProfileExists) {
+              return const RecruiterPage();
+            }
+            return const RecruiterEditPage();
+        }
       }
+      return const OnboardingView();
     },
     Routes.profile: (context) => const ProfileView(),
   };

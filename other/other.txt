@@ -1,0 +1,19 @@
+class RecruiterCubit extends Cubit<RecruiterState> {
+  RecruiterCubit() : super(const RecruiterInitial());
+
+  int selectedIndex = 0;
+
+  changeIndex(index) {
+    selectedIndex = index;
+    emit(TabChanged(selectedIndex));
+  }
+}
+
+class TabChanged extends RecruiterState {
+  const TabChanged(this.index);
+
+  final int index;
+
+  @override
+  List<Object> get props => [index];
+}
