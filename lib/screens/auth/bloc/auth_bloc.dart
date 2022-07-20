@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/services/auth.dart';
+import 'package:hiring_app/services/db.dart';
 import 'package:hiring_app/utils/strings.dart';
 
 part 'auth_event.dart';
@@ -24,6 +25,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emailController.text,
           passwordController.text,
         );
+        await Db().addUser(
+          role,
+          emailController.text,
+        );
+        await Db().getProfile();
         emit(const LoggedIn());
       } catch (e) {
         emit(ShowError(e));
@@ -37,6 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emailController.text,
           passwordController.text,
         );
+        await Db().getProfile();
         emit(const LoggedIn());
       } catch (e) {
         emit(ShowError(e));
@@ -47,7 +54,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const Loading());
       try {
         await Auth().logout();
-        clear();
+        await clear();
         emit(const LoggedOut());
       } catch (e) {
         emit(ShowError(e));
@@ -70,7 +77,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const Loading());
       try {
         await Auth().delete();
-        clear();
+        await clear();
         emit(const UserDeleted());
       } catch (e) {
         emit(ShowError(e));
@@ -78,7 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 
-  void clear() {
+  Future<void> clear() async {
     emailController.clear();
     passwordController.clear();
   }

@@ -21,6 +21,18 @@ class AppStyles {
     wordSpacing: 1,
   );
 
+  static TextStyle primary2Bold20 = TextStyle(
+    color: AppColors.primary2,
+    fontWeight: FontWeight.bold,
+    fontSize: 20.toFont,
+  );
+
+  static TextStyle primary2Regular20 = TextStyle(
+    color: AppColors.primary2,
+    fontWeight: FontWeight.normal,
+    fontSize: 20.toFont,
+  );
+
   static TextStyle blackRegular15 = TextStyle(
     color: AppColors.black,
     fontWeight: FontWeight.normal,
