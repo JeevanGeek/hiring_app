@@ -19,10 +19,8 @@ class ForgotPasswordView extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is EmailSent) {
-            Dialogs.snackBar(context, state.message.toString());
-            Future.delayed(const Duration(milliseconds: 4000), () {
-              Navigator.pop(context);
-            });
+            Dialogs.snackBar(context, state.message);
+            Navigator.pop(context);
           } else if (state is ShowError) {
             Dialogs.snackBar(context, state.message.toString());
           }

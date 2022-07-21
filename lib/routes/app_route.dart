@@ -1,12 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hiring_app/routes/routes.dart';
 import 'package:hiring_app/screens/auth/auth.dart';
 import 'package:hiring_app/screens/candidate/candidate.dart';
+import 'package:hiring_app/screens/home/home.dart';
+import 'package:hiring_app/screens/jobs/jobs.dart';
 import 'package:hiring_app/screens/recruiter/recruiter.dart';
 import 'package:hiring_app/screens/welcome/welcome.dart';
 import 'package:hiring_app/services/db.dart';
-import 'package:hiring_app/utils/constants.dart';
-import 'package:hiring_app/utils/strings.dart';
 
 class AppRoute {
   AppRoute._();
@@ -21,21 +22,23 @@ class AppRoute {
     Routes.forgotPassword: (context) => const ForgotPasswordView(),
     Routes.home: (context) {
       if (Db().isUserExists) {
-        switch (Db().profile?.get(AppConstants.role)) {
-          case AppStrings.candidate:
-            if (Db().isProfileExists) {
-              return const CandidatePage();
-            }
-            return const CandidateEditPage();
-          case AppStrings.recruiter:
-            if (Db().isProfileExists) {
-              return const RecruiterPage();
-            }
-            return const RecruiterEditPage();
+        if (Db().isProfileExists) {
+          return const HomePage();
+        }
+        if (Db().isCandidate) {
+          return const CandidateEditView();
+        } else if (Db().isRecruiter) {
+          return const RecruiterEditView();
         }
       }
       return const OnboardingView();
     },
     Routes.profile: (context) => const ProfileView(),
+    Routes.newJob: (context) => const NewJobView(),
+    Routes.job: (context) {
+      final job = ModalRoute.of(context)?.settings.arguments
+          as QueryDocumentSnapshot<Map<String, dynamic>>;
+      return JobDetailsView(job: job);
+    },
   };
 }

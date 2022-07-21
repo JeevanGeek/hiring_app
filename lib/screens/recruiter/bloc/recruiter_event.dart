@@ -10,3 +10,7 @@ abstract class RecruiterEvent extends Equatable {
 class SaveRecruiterProfile extends RecruiterEvent {
   const SaveRecruiterProfile();
 }
+
+class AddJob extends RecruiterEvent {
+  const AddJob();
+}

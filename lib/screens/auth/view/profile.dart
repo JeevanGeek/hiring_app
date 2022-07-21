@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/routes/routes.dart';
 import 'package:hiring_app/screens/auth/auth.dart';
-import 'package:hiring_app/services/auth.dart';
 import 'package:hiring_app/services/db.dart';
 import 'package:hiring_app/utils/constants.dart';
 import 'package:hiring_app/utils/strings.dart';
@@ -32,26 +31,24 @@ class ProfileView extends StatelessWidget {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              reverse: true,
               child: Padding(
                 padding: EdgeInsets.all(AppConstants.x4),
                 child: Column(
                   children: [
                     CircleAvatar(
                       radius: AppConstants.x6,
-                      backgroundImage: NetworkImage('${Auth().user?.photoURL}'),
+                      backgroundImage:
+                          NetworkImage(Db().profile?.get(AppConstants.avatar)),
                     ),
                     SizedBox(height: AppConstants.x4),
                     Text(
-                      '${Auth().user?.displayName}',
+                      Db().profile?.get(AppConstants.name),
                       style: AppStyles.primary2Bold25,
                     ),
                     SizedBox(height: AppConstants.x4),
-                    if (Db().profile?.get(AppConstants.role) ==
-                        AppStrings.candidate)
+                    if (Db().isCandidate)
                       const CandidateProfile()
-                    else if (Db().profile?.get(AppConstants.role) ==
-                        AppStrings.recruiter)
+                    else if (Db().isRecruiter)
                       const RecruiterProfile(),
                     SizedBox(height: AppConstants.x5),
                     PrimaryButton(
@@ -137,8 +134,8 @@ class RecruiterProfile extends StatelessWidget {
           trailing: Trailing(Db().profile?.get(AppConstants.sector)),
         ),
         ListTile(
-          leading: const Leading(AppStrings.company),
-          trailing: Trailing(Db().profile?.get(AppConstants.company)),
+          leading: const Leading(AppStrings.employees),
+          trailing: Trailing(Db().profile?.get(AppConstants.employees)),
         ),
         ListTile(
           leading: const Leading(AppStrings.city),
