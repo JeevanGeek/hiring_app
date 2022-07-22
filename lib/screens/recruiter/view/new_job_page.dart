@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/data/static_data.dart';
-import 'package:hiring_app/screens/home/home.dart' as home;
+import 'package:hiring_app/screens/home/home.dart';
 import 'package:hiring_app/screens/recruiter/recruiter.dart';
 import 'package:hiring_app/utils/constants.dart';
 import 'package:hiring_app/utils/strings.dart';
@@ -20,10 +20,10 @@ class NewJobView extends StatelessWidget {
       body: BlocListener<RecruiterBloc, RecruiterState>(
         listener: (context, state) {
           if (state is JobAdded) {
-            context.read<home.HomeBloc>().add(const home.GetJobs());
+            context.read<HomeBloc>().add(const GetJobs());
             Dialogs.snackBar(context, state.message);
             Navigator.pop(context);
-          } else if (state is ShowError) {
+          } else if (state is RecruiterError) {
             Dialogs.snackBar(context, state.message.toString());
           }
         },
@@ -162,7 +162,7 @@ class NewJobView extends StatelessWidget {
                         },
                         child: BlocBuilder<RecruiterBloc, RecruiterState>(
                           builder: (context, state) {
-                            return (state is Loading)
+                            return (state is RecruiterLoading)
                                 ? const Loader()
                                 : Text(
                                     AppStrings.submit,

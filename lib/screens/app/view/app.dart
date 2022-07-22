@@ -4,6 +4,7 @@ import 'package:hiring_app/routes/app_route.dart';
 import 'package:hiring_app/screens/auth/auth.dart';
 import 'package:hiring_app/screens/candidate/candidate.dart';
 import 'package:hiring_app/screens/home/home.dart';
+import 'package:hiring_app/screens/jobs/jobs.dart';
 import 'package:hiring_app/screens/recruiter/recruiter.dart';
 import 'package:hiring_app/utils/strings.dart';
 
@@ -17,6 +18,7 @@ class HiringApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => HomeBloc()),
         BlocProvider(create: (context) => HomeCubit()),
+        BlocProvider(create: (context) => JobsBloc()),
         BlocProvider(create: (context) => CandidateBloc()),
         BlocProvider(create: (context) => RecruiterBloc()),
       ],

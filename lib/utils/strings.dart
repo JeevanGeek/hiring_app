@@ -83,7 +83,7 @@ class AppStrings {
   static const String location = 'Location';
   static const String payRange = 'Pay Range';
   static const String apply = 'Apply';
-
+  static const String applyForJob = 'Apply for Job';
   static const String jobs = 'Jobs';
   static const String profile = 'Profile';
   static const String hoursAgo = 'hours ago';
@@ -91,4 +91,11 @@ class AppStrings {
   static const String addNewJobs = 'Add new jobs from below (+)';
   static const String addNewJob = 'Add New Job';
   static const String jobAdded = 'Job Added Successfully';
+  static const String appliedForJob = 'Applied for the Job Successfully';
+  static const String applications = 'Applications';
+  static const String jobApplications = 'Job Applications';
+  static const String searchForJobs = 'Search for jobs...';
+  static const String jobApplicants = 'Job Applicants';
+  static const String applied = 'Applied';
+  static const String coverLetter = 'Cover Letter';
 }

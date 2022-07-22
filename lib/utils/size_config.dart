@@ -6,6 +6,7 @@ class SizeConfig {
   SizeConfig._();
 
   static final SizeConfig _instance = SizeConfig._();
+
   factory SizeConfig() => _instance;
 
   late MediaQueryData _mediaQueryData;

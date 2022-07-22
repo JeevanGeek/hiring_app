@@ -33,9 +33,11 @@ class JobsView extends StatelessWidget {
             SizedBox(height: AppConstants.x4),
             BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
               if (state is JobLoaded) {
-                return JobsAvailable(jobs: state.jobs);
-              } else if (state is JobEmpty) {
-                return const JobsNotAvailable();
+                final jobs = state.jobs;
+                if (jobs.isEmpty) {
+                  return const JobsNotAvailable();
+                }
+                return HomeJobs(jobs: state.jobs);
               } else {
                 return const ShimmerLoader();
               }
@@ -70,8 +72,8 @@ class JobsNotAvailable extends StatelessWidget {
   }
 }
 
-class JobsAvailable extends StatelessWidget {
-  const JobsAvailable({
+class HomeJobs extends StatelessWidget {
+  const HomeJobs({
     Key? key,
     required this.jobs,
   }) : super(key: key);
@@ -91,9 +93,74 @@ class JobsAvailable extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(
               context,
-              Routes.job,
+              Routes.jobDetails,
               arguments: job,
             );
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.x4),
+          ),
+          isThreeLine: true,
+          tileColor: AppColors.primary9,
+          leading: CircleAvatar(
+            radius: AppConstants.x5,
+            backgroundImage: NetworkImage(job.get(AppConstants.avatar)),
+          ),
+          title: Text(
+            job.get(AppConstants.jobTitle),
+            style: AppStyles.primary2Bold18,
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                job.get(AppConstants.name),
+                style: AppStyles.primary3Bold16,
+              ),
+              Text(
+                '${job.get(AppConstants.jobLocation)} (${job.get(AppConstants.jobCulture)})',
+                style: AppStyles.primary4Bold14,
+              ),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class ApplicationJobs extends StatelessWidget {
+  const ApplicationJobs({
+    Key? key,
+    required this.jobs,
+  }) : super(key: key);
+
+  final List<QueryDocumentSnapshot<Map<String, dynamic>>> jobs;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemCount: jobs.length,
+      separatorBuilder: ((context, index) => const Divider()),
+      itemBuilder: ((context, index) {
+        final job = jobs[index];
+        return ListTile(
+          onTap: () {
+            if (Db().isCandidate) {
+              Navigator.pushNamed(
+                context,
+                Routes.jobDetails,
+                arguments: job,
+              );
+            } else {
+              Navigator.pushNamed(
+                context,
+                Routes.jobApplicants,
+                arguments: job,
+              );
+            }
           },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.x4),

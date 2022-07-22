@@ -2,11 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class Auth {
   Auth._();
+
   static final Auth _instance = Auth._();
+
   static Auth get instance => _instance;
+
   factory Auth() => _instance;
 
   User? get auth => FirebaseAuth.instance.currentUser;
+
   bool get isLoggedIn => auth != null;
 
   Future<void> register(String email, String password) async {

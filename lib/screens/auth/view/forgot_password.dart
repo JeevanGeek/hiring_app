@@ -21,7 +21,7 @@ class ForgotPasswordView extends StatelessWidget {
           if (state is EmailSent) {
             Dialogs.snackBar(context, state.message);
             Navigator.pop(context);
-          } else if (state is ShowError) {
+          } else if (state is AuthError) {
             Dialogs.snackBar(context, state.message.toString());
           }
         },
@@ -81,7 +81,7 @@ class ForgotPasswordView extends StatelessWidget {
                             },
                             child: BlocBuilder<AuthBloc, AuthState>(
                               builder: (context, state) {
-                                return (state is Loading)
+                                return (state is AuthLoading)
                                     ? const Loader()
                                     : Text(
                                         AppStrings.submit,

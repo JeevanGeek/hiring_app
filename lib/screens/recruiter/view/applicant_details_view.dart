@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:hiring_app/services/db.dart';
 import 'package:hiring_app/utils/colors.dart';
 import 'package:hiring_app/utils/constants.dart';
 import 'package:hiring_app/utils/strings.dart';
 import 'package:hiring_app/utils/styles.dart';
 import 'package:hiring_app/utils/time_utils.dart';
-import 'package:hiring_app/widgets/buttons.dart';
 import 'package:hiring_app/widgets/widgets.dart';
 
-class JobDetailsView extends StatelessWidget {
-  const JobDetailsView({Key? key, required this.job}) : super(key: key);
+class ApplicantDetailsView extends StatelessWidget {
+  const ApplicantDetailsView({Key? key, required this.applicant})
+      : super(key: key);
 
-  final QueryDocumentSnapshot<Map<String, dynamic>> job;
+  final QueryDocumentSnapshot<Map<String, dynamic>> applicant;
 
   @override
   Widget build(BuildContext context) {
@@ -25,28 +24,29 @@ class JobDetailsView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: AppConstants.x5),
-                Text(
-                  job.get(AppConstants.jobTitle),
-                  style: AppStyles.primary2Bold25,
-                ),
-                SizedBox(height: AppConstants.x3),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(job.get(AppConstants.avatar)),
+                Center(
+                  child: CircleAvatar(
+                    radius: AppConstants.x6,
+                    backgroundImage: NetworkImage(
+                      applicant.get(AppConstants.avatar),
+                    ),
                   ),
-                  title: Text(
-                    job.get(AppConstants.name),
+                ),
+                SizedBox(height: AppConstants.x4),
+                Center(
+                  child: Text(
+                    applicant.get(AppConstants.name),
                     style: AppStyles.primary3Bold18,
                   ),
-                  subtitle: Text(
-                    '${job.get(AppConstants.jobLocation)} (${job.get(AppConstants.jobCulture)})',
-                    style: AppStyles.primary4Bold16,
-                  ),
                 ),
                 SizedBox(height: AppConstants.x3),
                 Text(
-                  TimeUtils.timeAgo(job.get(AppConstants.addedAt)),
+                  applicant.get(AppConstants.city),
+                  style: AppStyles.primary4Bold16,
+                ),
+                SizedBox(height: AppConstants.x3),
+                Text(
+                  TimeUtils.timeAgo(applicant.get(AppConstants.appliedAt)),
                   style: AppStyles.greySemibold14,
                 ),
                 SizedBox(height: AppConstants.x4),
@@ -59,12 +59,12 @@ class JobDetailsView extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(
-                              Icons.work_rounded,
+                              Icons.email_rounded,
                               color: AppColors.primary3,
                             ),
                             SizedBox(width: AppConstants.x3),
                             Text(
-                              job.get(AppConstants.jobType),
+                              applicant.get(AppConstants.email),
                               style: AppStyles.primary3Bold14,
                             ),
                           ],
@@ -73,12 +73,12 @@ class JobDetailsView extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(
-                              Icons.security,
+                              Icons.phone_enabled_rounded,
                               color: AppColors.primary3,
                             ),
                             SizedBox(width: AppConstants.x3),
                             Text(
-                              job.get(AppConstants.sector),
+                              applicant.get(AppConstants.phone),
                               style: AppStyles.primary3Bold14,
                             ),
                           ],
@@ -91,12 +91,12 @@ class JobDetailsView extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(
-                              Icons.money_rounded,
+                              Icons.person_rounded,
                               color: AppColors.primary3,
                             ),
                             SizedBox(width: AppConstants.x3),
                             Text(
-                              job.get(AppConstants.jobPayRange),
+                              applicant.get(AppConstants.gender),
                               style: AppStyles.primary3Bold14,
                             ),
                           ],
@@ -105,12 +105,12 @@ class JobDetailsView extends StatelessWidget {
                         Row(
                           children: [
                             const Icon(
-                              Icons.store,
+                              Icons.calendar_today_rounded,
                               color: AppColors.primary3,
                             ),
                             SizedBox(width: AppConstants.x3),
                             Text(
-                              job.get(AppConstants.employees),
+                              applicant.get(AppConstants.dob),
                               style: AppStyles.primary3Bold14,
                             ),
                           ],
@@ -121,24 +121,14 @@ class JobDetailsView extends StatelessWidget {
                 ),
                 SizedBox(height: AppConstants.x4),
                 Text(
-                  AppStrings.jobDescription,
+                  AppStrings.coverLetter,
                   style: AppStyles.blackSemiboldUnderline16,
                 ),
                 SizedBox(height: AppConstants.x3),
                 Text(
-                  job.get(AppConstants.jobDescription),
+                  applicant.get(AppConstants.coverLetter),
                   style: AppStyles.greySemibold14,
                 ),
-                SizedBox(height: AppConstants.x4),
-                if (Db().isCandidate)
-                  PrimaryButton(
-                    child: Text(
-                      AppStrings.apply,
-                      textAlign: TextAlign.center,
-                      style: AppStyles.primary9Regular16,
-                    ),
-                    onPressed: () {},
-                  ),
               ],
             ),
           ),

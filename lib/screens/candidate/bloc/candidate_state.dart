@@ -11,16 +11,25 @@ class CandidateInitial extends CandidateState {
   const CandidateInitial();
 }
 
-class Loading extends CandidateState {
-  const Loading();
+class CandidateLoading extends CandidateState {
+  const CandidateLoading();
 }
 
 class ProfileSaved extends CandidateState {
   const ProfileSaved();
 }
 
-class ShowError extends CandidateState {
-  const ShowError(this.message);
+class JobApplied extends CandidateState {
+  const JobApplied(this.message);
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}
+
+class CandidateError extends CandidateState {
+  const CandidateError(this.message);
 
   final Object message;
 

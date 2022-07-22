@@ -7,29 +7,34 @@ import 'package:hiring_app/utils/strings.dart';
 
 class Db {
   Db._();
+
   static final Db _instance = Db._();
+
   static Db get instance => _instance;
+
   factory Db() => _instance;
 
   User? get auth => Auth().auth;
 
   CollectionReference<Map<String, dynamic>> get usersCollection =>
       FirebaseFirestore.instance.collection(AppConstants.users);
+
   CollectionReference<Map<String, dynamic>> get jobsCollection =>
       FirebaseFirestore.instance.collection(AppConstants.jobs);
 
   DocumentReference<Map<String, dynamic>> get user =>
       usersCollection.doc(auth?.email);
   DocumentSnapshot<Map<String, dynamic>>? profile;
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> allJobs = [];
-  List<QueryDocumentSnapshot<Map<String, dynamic>>> jobs = [];
 
   bool get isUserExists =>
       profile?.data()?.containsKey(AppConstants.role) ?? false;
+
   bool get isProfileExists =>
       profile?.data()?.containsKey(AppConstants.name) ?? false;
+
   bool get isCandidate =>
       Db().profile?.get(AppConstants.role) == AppStrings.candidate;
+
   bool get isRecruiter =>
       Db().profile?.get(AppConstants.role) == AppStrings.recruiter;
 
@@ -105,6 +110,8 @@ class Db {
     try {
       final id = Services.getId;
       final data = {
+        AppConstants.id: id,
+        AppConstants.email: profile?.get(AppConstants.email),
         AppConstants.name: profile?.get(AppConstants.name),
         AppConstants.sector: profile?.get(AppConstants.sector),
         AppConstants.employees: profile?.get(AppConstants.employees),
@@ -116,6 +123,7 @@ class Db {
         AppConstants.jobPayRange: payRange,
         AppConstants.jobLocation: location,
         AppConstants.jobDescription: description,
+        AppConstants.isApplied: false,
         AppConstants.addedAt: DateTime.now().toString(),
       };
       await user.collection(AppConstants.jobs).doc(id).set(data);
@@ -125,17 +133,88 @@ class Db {
     }
   }
 
+  Future<void> addApplication(
+    QueryDocumentSnapshot<Map<String, dynamic>> job,
+    String coverLetter,
+  ) async {
+    await user
+        .collection(AppConstants.jobs)
+        .doc(job.get(AppConstants.id))
+        .set(job.data());
+    await user
+        .collection(AppConstants.jobs)
+        .doc(job.get(AppConstants.id))
+        .update({AppConstants.isApplied: true});
+    await usersCollection
+        .doc(job.get(AppConstants.email))
+        .collection(AppConstants.jobs)
+        .doc(job.get(AppConstants.id))
+        .update({AppConstants.applicants: true});
+    await usersCollection
+        .doc(job.get(AppConstants.email))
+        .collection(AppConstants.jobs)
+        .doc(job.get(AppConstants.id))
+        .collection(AppConstants.applicants)
+        .doc(auth?.email)
+        .set(profile?.data() ?? {});
+    await usersCollection
+        .doc(job.get(AppConstants.email))
+        .collection(AppConstants.jobs)
+        .doc(job.get(AppConstants.id))
+        .collection(AppConstants.applicants)
+        .doc(auth?.email)
+        .update({
+      AppConstants.coverLetter: coverLetter,
+      AppConstants.appliedAt: DateTime.now().toString(),
+    });
+  }
+
   Future<void> getProfile() async {
     profile = await user.get();
   }
 
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getAllJobs() async {
-    allJobs = (await jobsCollection.get()).docs;
-    return allJobs;
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getCandidateJobs() async {
+    return (await jobsCollection.get()).docs;
   }
 
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getJobs() async {
-    jobs = (await user.collection(AppConstants.jobs).get()).docs;
-    return jobs;
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getRecruiterJobs() async {
+    return (await user.collection(AppConstants.jobs).get()).docs;
+  }
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getCandidateApplications() async {
+    return (await user.collection(AppConstants.jobs).get()).docs;
+  }
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>>
+      getRecruiterApplications() async {
+    return (await user.collection(AppConstants.jobs).get())
+        .docs
+        .where((element) => element.data().containsKey(AppConstants.applicants))
+        .toList();
+  }
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> getApplicants(
+      String id) async {
+    return (await user
+            .collection(AppConstants.jobs)
+            .doc(id)
+            .collection(AppConstants.applicants)
+            .get())
+        .docs;
+  }
+
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> searchJobs(
+      String query) async {
+    return (await jobsCollection.get())
+        .docs
+        .where((element) => element
+            .get(AppConstants.jobTitle)
+            .toString()
+            .toUpperCase()
+            .contains(query.toUpperCase()))
+        .toList();
   }
 }

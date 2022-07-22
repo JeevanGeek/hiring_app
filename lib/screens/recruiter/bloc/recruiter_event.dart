@@ -14,3 +14,12 @@ class SaveRecruiterProfile extends RecruiterEvent {
 class AddJob extends RecruiterEvent {
   const AddJob();
 }
+
+class GetApplicants extends RecruiterEvent {
+  const GetApplicants(this.id);
+
+  final String id;
+
+  @override
+  List<Object> get props => [id];
+}

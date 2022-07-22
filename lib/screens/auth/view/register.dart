@@ -26,7 +26,7 @@ class RegisterView extends StatelessWidget {
               Routes.home,
               (route) => false,
             );
-          } else if (state is ShowError) {
+          } else if (state is AuthError) {
             Dialogs.snackBar(context, state.message.toString());
           }
         },
@@ -132,7 +132,7 @@ class RegisterView extends StatelessWidget {
                         },
                         child: BlocBuilder<AuthBloc, AuthState>(
                           builder: (context, state) {
-                            return (state is Loading)
+                            return (state is AuthLoading)
                                 ? const Loader()
                                 : Text(
                                     AppStrings.register,

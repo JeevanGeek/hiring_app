@@ -11,16 +11,16 @@ class RecruiterInitial extends RecruiterState {
   const RecruiterInitial();
 }
 
-class Loading extends RecruiterState {
-  const Loading();
+class RecruiterLoading extends RecruiterState {
+  const RecruiterLoading();
 }
 
 class ProfileSaved extends RecruiterState {
   const ProfileSaved();
 }
 
-class ShowError extends RecruiterState {
-  const ShowError(this.message);
+class RecruiterError extends RecruiterState {
+  const RecruiterError(this.message);
 
   final Object message;
 
@@ -35,4 +35,13 @@ class JobAdded extends RecruiterState {
 
   @override
   List<Object> get props => [message];
+}
+
+class ApplicantsLoaded extends RecruiterState {
+  const ApplicantsLoaded(this.applicants);
+
+  final List<QueryDocumentSnapshot<Map<String, dynamic>>> applicants;
+
+  @override
+  List<Object> get props => [applicants];
 }

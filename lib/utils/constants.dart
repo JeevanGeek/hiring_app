@@ -16,6 +16,7 @@ class AppConstants {
   static double x8 = min(256.0.toHeight, 256.0.toWidth);
   static double x9 = min(512.0.toHeight, 512.0.toWidth);
 
+  static const String id = 'id';
   static const String role = 'role';
   static const String email = 'email';
   static const String isActive = 'is_active';
@@ -40,4 +41,8 @@ class AppConstants {
   static const String addedAt = 'added_at';
   static const String jobs = 'jobs';
   static const String avatar = 'avatar';
+  static const String applicants = 'applicants';
+  static const String isApplied = 'isApplied';
+  static const String coverLetter = 'coverLetter';
+  static const String appliedAt = 'applied_at';
 }

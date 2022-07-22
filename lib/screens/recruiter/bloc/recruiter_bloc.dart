@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,7 @@ class RecruiterBloc extends Bloc<RecruiterEvent, RecruiterState> {
 
   RecruiterBloc() : super(const RecruiterInitial()) {
     on<SaveRecruiterProfile>((event, emit) async {
-      emit(const Loading());
+      emit(const RecruiterLoading());
       try {
         await Db().setRecruiterProfile(
           companyController.text,
@@ -39,12 +40,12 @@ class RecruiterBloc extends Bloc<RecruiterEvent, RecruiterState> {
         await Db().getProfile();
         emit(const ProfileSaved());
       } catch (e) {
-        emit(ShowError(e));
+        emit(RecruiterError(e));
       }
     });
 
     on<AddJob>((event, emit) async {
-      emit(const Loading());
+      emit(const RecruiterLoading());
       try {
         await Db().addJob(
           jobTitleController.text,
@@ -56,7 +57,17 @@ class RecruiterBloc extends Bloc<RecruiterEvent, RecruiterState> {
         );
         emit(const JobAdded(AppStrings.jobAdded));
       } catch (e) {
-        emit(ShowError(e));
+        emit(RecruiterError(e));
+      }
+    });
+
+    on<GetApplicants>((event, emit) async {
+      emit(const RecruiterLoading());
+      try {
+        final applicants = await Db().getApplicants(event.id);
+        emit(ApplicantsLoaded(applicants));
+      } catch (e) {
+        emit(RecruiterError(e));
       }
     });
   }

@@ -9,18 +9,17 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeInitial()) {
     on<GetJobs>((event, emit) async {
-      emit(const Loading());
+      emit(const HomeLoading());
       try {
         final jobs = Db().isCandidate
-            ? (await Db().getAllJobs())
-            : (await Db().getJobs());
-        if (jobs.isEmpty) {
-          return emit(const JobEmpty());
-        } else {
-          emit(JobLoaded(jobs));
-        }
+            ? (await Db().getCandidateJobs())
+            : (await Db().getRecruiterJobs());
+        final applications = Db().isCandidate
+            ? (await Db().getCandidateApplications())
+            : (await Db().getRecruiterApplications());
+        emit(JobLoaded(jobs, applications));
       } catch (e) {
-        emit(ShowError(e));
+        emit(HomeError(e));
       }
     });
   }
