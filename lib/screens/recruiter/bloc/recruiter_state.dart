@@ -27,3 +27,12 @@ class ShowError extends RecruiterState {
   @override
   List<Object> get props => [message];
 }
+
+class JobAdded extends RecruiterState {
+  const JobAdded(this.message);
+
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

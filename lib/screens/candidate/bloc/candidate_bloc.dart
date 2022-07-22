@@ -10,7 +10,7 @@ class CandidateBloc extends Bloc<CandidateEvent, CandidateState> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final dobController = TextEditingController();
-  final profileKey = GlobalKey<FormState>();
+  final candidateKey = GlobalKey<FormState>();
 
   late String iAm;
   late String gender;

@@ -22,13 +22,35 @@ class StaticData {
     AppStrings.private,
   ];
 
-  static const List<String> companySize = [
-    '1-10',
-    '10-50',
-    '50-200',
-    '200-500',
-    '500-1000',
-    '1000+'
+  static const List<String> jobType = [
+    AppStrings.fullTime,
+    AppStrings.partTime,
+    AppStrings.contract,
+    AppStrings.internship,
+  ];
+
+  static const List<String> jobCulture = [
+    AppStrings.onSite,
+    AppStrings.remote,
+    AppStrings.hybrid,
+  ];
+
+  static const List<String> payRange = [
+    '0-2 LPA',
+    '2-5 LPA',
+    '5-10 LPA',
+    '10-20 LPA',
+    '20-50 LPA',
+    '50+ LPA',
+  ];
+
+  static const List<String> employees = [
+    '1-10 Employees',
+    '10-50 Employees',
+    '50-200 Employees',
+    '200-500 Employees',
+    '500-1000 Employees',
+    '1000+ Employees'
   ];
 
   static const List<String> city = [

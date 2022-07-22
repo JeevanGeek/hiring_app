@@ -45,7 +45,8 @@ class AppStrings {
   static const String female = 'Female';
   static const String gender = 'Gender';
   static const String name = 'Name';
-  static const String company = 'Company';
+  static const String companyName = 'Company Name';
+  static const String employees = 'Employees';
   static const String city = 'City';
   static const String dob = 'Date of Birth';
   static const String dobExample = 'DD/MM/YYYY';
@@ -65,4 +66,29 @@ class AppStrings {
   static const String websiteExample = 'www.example.com';
   static const String phoneExample = '9876543210';
   static const String phone = 'Phone';
+  static const String jobTitle = 'Job Title';
+  static const String jobTitleExample = 'Flutter Developer';
+  static const String fullTime = 'Full Time';
+  static const String partTime = 'Part Time';
+  static const String contract = 'Contract';
+  static const String internship = 'Internship';
+  static const String jobType = 'Job Type';
+  static const String onSite = 'On-site';
+  static const String remote = 'Remote';
+  static const String hybrid = 'Hybrid';
+  static const String jobCulture = 'Job Culture';
+  static const String jobDescription = 'Job Description';
+  static const String jobDescriptionExample =
+      'We are looking for flutter developer...';
+  static const String location = 'Location';
+  static const String payRange = 'Pay Range';
+  static const String apply = 'Apply';
+
+  static const String jobs = 'Jobs';
+  static const String profile = 'Profile';
+  static const String hoursAgo = 'hours ago';
+  static const String welcomeBack = 'Welcome Back';
+  static const String addNewJobs = 'Add new jobs from below (+)';
+  static const String addNewJob = 'Add New Job';
+  static const String jobAdded = 'Job Added Successfully';
 }

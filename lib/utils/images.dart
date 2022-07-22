@@ -1,7 +1,9 @@
 class AppImages {
   AppImages._();
 
-  static const String base = 'assets/images';
+  /// Images
+  static const String onboarding = 'assets/images/onboarding.jpg';
 
-  static const String onboarding = '$base/onboarding.jpg';
+  /// Animations
+  static const String noJobs = 'assets/animations/no-job.json';
 }

@@ -8,4 +8,6 @@ class Routes {
   static const String login = '/login';
   static const String forgotPassword = '/forgotPassword';
   static const String profile = '/profile';
+  static const String newJob = '/newJob';
+  static const String job = '/job';
 }

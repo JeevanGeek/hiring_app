@@ -18,17 +18,26 @@ class AppConstants {
 
   static const String role = 'role';
   static const String email = 'email';
-  static const String isActive = 'isActive';
-  static const String createdAt = 'createdAt';
+  static const String isActive = 'is_active';
+  static const String createdAt = 'created_at';
   static const String name = 'name';
   static const String phone = 'phone';
-  static const String iAm = 'iAm';
+  static const String iAm = 'i_am';
   static const String gender = 'gender';
   static const String city = 'city';
   static const String dob = 'dob';
-  static const String updatedAt = 'updatedAt';
+  static const String updatedAt = 'updated_at';
   static const String sector = 'sector';
-  static const String company = 'company';
+  static const String employees = 'employees';
   static const String website = 'website';
   static const String users = 'users';
+  static const String jobTitle = 'job_title';
+  static const String jobType = 'job_type';
+  static const String jobCulture = 'job_culture';
+  static const String jobPayRange = 'job_pay_range';
+  static const String jobLocation = 'job_location';
+  static const String jobDescription = 'job_description';
+  static const String addedAt = 'added_at';
+  static const String jobs = 'jobs';
+  static const String avatar = 'avatar';
 }
