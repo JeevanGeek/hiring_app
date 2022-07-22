@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/data/static_data.dart';
 import 'package:hiring_app/routes/routes.dart';
-import 'package:hiring_app/screens/auth/auth.dart' as auth;
+import 'package:hiring_app/screens/auth/auth.dart';
 import 'package:hiring_app/screens/recruiter/recruiter.dart';
 import 'package:hiring_app/utils/colors.dart';
 import 'package:hiring_app/utils/constants.dart';
@@ -19,24 +19,30 @@ class RecruiterEditView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<RecruiterBloc, RecruiterState>(
-        listener: (context, state) {
-          if (state is auth.LoggedOut) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.onboarding,
-              (route) => false,
-            );
-          } else if (state is ProfileSaved) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.home,
-              (route) => false,
-            );
-          } else if (state is ShowError) {
-            Dialogs.snackBar(context, state.message.toString());
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<RecruiterBloc, RecruiterState>(
+              listener: (context, state) {
+            if (state is ProfileSaved) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.home,
+                (route) => false,
+              );
+            } else if (state is RecruiterError) {
+              Dialogs.snackBar(context, state.message.toString());
+            }
+          }),
+          BlocListener<AuthBloc, AuthState>(listener: (context, state) {
+            if (state is LoggedOut) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                Routes.onboarding,
+                (route) => false,
+              );
+            }
+          }),
+        ],
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -59,9 +65,7 @@ class RecruiterEditView extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              context
-                                  .read<auth.AuthBloc>()
-                                  .add(const auth.UserLogout());
+                              context.read<AuthBloc>().add(const UserLogout());
                             },
                             icon: const Icon(Icons.power_settings_new),
                             color: AppColors.red,
@@ -186,7 +190,7 @@ class RecruiterEditView extends StatelessWidget {
                         },
                         child: BlocBuilder<RecruiterBloc, RecruiterState>(
                           builder: (context, state) {
-                            return (state is Loading)
+                            return (state is RecruiterLoading)
                                 ? const Loader()
                                 : Text(
                                     AppStrings.submit,

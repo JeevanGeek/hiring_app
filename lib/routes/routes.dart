@@ -9,5 +9,7 @@ class Routes {
   static const String forgotPassword = '/forgotPassword';
   static const String profile = '/profile';
   static const String newJob = '/newJob';
-  static const String job = '/job';
+  static const String jobDetails = '/jobDetails';
+  static const String jobApplicants = '/jobApplicants';
+  static const String applicantDetails = '/applicantDetails';
 }

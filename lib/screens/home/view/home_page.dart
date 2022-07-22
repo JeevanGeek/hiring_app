@@ -28,6 +28,8 @@ class HomeView extends StatelessWidget {
       body: SafeArea(
         child: const [
           JobsView(),
+          ApplicationView(),
+          SearchView(),
           ProfileView(),
         ][context.select<HomeCubit, int>((value) => value.selectedIndex)],
       ),
@@ -59,6 +61,16 @@ class HomeView extends StatelessWidget {
                 NavigationDestination(
                   icon: Icon(Icons.home_outlined),
                   selectedIcon: Icon(Icons.home),
+                  label: AppStrings.jobs,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.dashboard_outlined),
+                  selectedIcon: Icon(Icons.dashboard),
+                  label: AppStrings.applications,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.search_outlined),
+                  selectedIcon: Icon(Icons.search),
                   label: AppStrings.jobs,
                 ),
                 NavigationDestination(

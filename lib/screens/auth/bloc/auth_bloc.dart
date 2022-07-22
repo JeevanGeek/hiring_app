@@ -19,7 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc() : super(const AuthInitial()) {
     on<UserRegister>((event, emit) async {
-      emit(const Loading());
+      emit(const AuthLoading());
       try {
         await Auth().register(
           emailController.text,
@@ -32,12 +32,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await Db().getProfile();
         emit(const LoggedIn());
       } catch (e) {
-        emit(ShowError(e));
+        emit(AuthError(e));
       }
     });
 
     on<UserLogin>((event, emit) async {
-      emit(const Loading());
+      emit(const AuthLoading());
       try {
         await Auth().login(
           emailController.text,
@@ -46,41 +46,41 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await Db().getProfile();
         emit(const LoggedIn());
       } catch (e) {
-        emit(ShowError(e));
+        emit(AuthError(e));
       }
     });
 
     on<UserLogout>((event, emit) async {
-      emit(const Loading());
+      emit(const AuthLoading());
       try {
         await Auth().logout();
         await clear();
         emit(const LoggedOut());
       } catch (e) {
-        emit(ShowError(e));
+        emit(AuthError(e));
       }
     });
 
     on<UserForgot>((event, emit) async {
-      emit(const Loading());
+      emit(const AuthLoading());
       try {
         await Auth().forgot(emailController.text);
         emit(
           const EmailSent(AppStrings.passwordSent),
         );
       } catch (e) {
-        emit(ShowError(e));
+        emit(AuthError(e));
       }
     });
 
     on<UserDelete>((event, emit) async {
-      emit(const Loading());
+      emit(const AuthLoading());
       try {
         await Auth().delete();
         await clear();
         emit(const UserDeleted());
       } catch (e) {
-        emit(ShowError(e));
+        emit(AuthError(e));
       }
     });
   }

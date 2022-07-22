@@ -4,7 +4,6 @@ import 'package:hiring_app/routes/routes.dart';
 import 'package:hiring_app/screens/auth/auth.dart';
 import 'package:hiring_app/screens/candidate/candidate.dart';
 import 'package:hiring_app/screens/home/home.dart';
-import 'package:hiring_app/screens/jobs/jobs.dart';
 import 'package:hiring_app/screens/recruiter/recruiter.dart';
 import 'package:hiring_app/screens/welcome/welcome.dart';
 import 'package:hiring_app/services/db.dart';
@@ -35,10 +34,20 @@ class AppRoute {
     },
     Routes.profile: (context) => const ProfileView(),
     Routes.newJob: (context) => const NewJobView(),
-    Routes.job: (context) {
+    Routes.jobDetails: (context) {
       final job = ModalRoute.of(context)?.settings.arguments
           as QueryDocumentSnapshot<Map<String, dynamic>>;
       return JobDetailsView(job: job);
+    },
+    Routes.jobApplicants: (context) {
+      final job = ModalRoute.of(context)?.settings.arguments
+          as QueryDocumentSnapshot<Map<String, dynamic>>;
+      return JobApplicantsPage(job: job);
+    },
+    Routes.applicantDetails: (context) {
+      final applicant = ModalRoute.of(context)?.settings.arguments
+          as QueryDocumentSnapshot<Map<String, dynamic>>;
+      return ApplicantDetailsView(applicant: applicant);
     },
   };
 }

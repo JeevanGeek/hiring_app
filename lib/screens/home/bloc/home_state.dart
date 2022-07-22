@@ -11,12 +11,12 @@ class HomeInitial extends HomeState {
   const HomeInitial();
 }
 
-class Loading extends HomeState {
-  const Loading();
+class HomeLoading extends HomeState {
+  const HomeLoading();
 }
 
-class ShowError extends HomeState {
-  const ShowError(this.message);
+class HomeError extends HomeState {
+  const HomeError(this.message);
 
   final Object message;
 
@@ -34,14 +34,11 @@ class TabChanged extends HomeState {
 }
 
 class JobLoaded extends HomeState {
-  const JobLoaded(this.jobs);
+  const JobLoaded(this.jobs, this.applications);
 
   final List<QueryDocumentSnapshot<Map<String, dynamic>>> jobs;
+  final List<QueryDocumentSnapshot<Map<String, dynamic>>> applications;
 
   @override
-  List<Object> get props => [jobs];
-}
-
-class JobEmpty extends HomeState {
-  const JobEmpty();
+  List<Object> get props => [jobs, applications];
 }

@@ -11,8 +11,8 @@ class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-class Loading extends AuthState {
-  const Loading();
+class AuthLoading extends AuthState {
+  const AuthLoading();
 }
 
 class LoggedIn extends AuthState {
@@ -23,8 +23,8 @@ class LoggedOut extends AuthState {
   const LoggedOut();
 }
 
-class ShowError extends AuthState {
-  const ShowError(this.message);
+class AuthError extends AuthState {
+  const AuthError(this.message);
 
   final Object message;
 

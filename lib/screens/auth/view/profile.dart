@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/routes/routes.dart';
 import 'package:hiring_app/screens/auth/auth.dart';
+import 'package:hiring_app/screens/home/home.dart';
 import 'package:hiring_app/services/db.dart';
 import 'package:hiring_app/utils/constants.dart';
 import 'package:hiring_app/utils/strings.dart';
@@ -24,7 +25,8 @@ class ProfileView extends StatelessWidget {
               Routes.onboarding,
               (route) => false,
             );
-          } else if (state is ShowError) {
+            context.read<HomeCubit>().selectedIndex = 0;
+          } else if (state is AuthError) {
             Dialogs.snackBar(context, state.message.toString());
           }
         },
@@ -66,7 +68,7 @@ class ProfileView extends StatelessWidget {
                       },
                       child: BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
-                          return (state is Loading)
+                          return (state is AuthLoading)
                               ? const Loader()
                               : Text(
                                   AppStrings.logout,
@@ -93,7 +95,7 @@ class ProfileView extends StatelessWidget {
                       },
                       child: BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, state) {
-                          return (state is Loading)
+                          return (state is AuthLoading)
                               ? const Loader()
                               : Text(
                                   AppStrings.deleteAccount,

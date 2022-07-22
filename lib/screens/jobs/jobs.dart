@@ -1,2 +1,2 @@
-export 'view/jobs_view.dart';
-export 'view/job_details_view.dart';
+export 'bloc/jobs_bloc.dart';
+export 'view/search_view.dart';

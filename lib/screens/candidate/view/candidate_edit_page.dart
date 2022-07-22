@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hiring_app/data/static_data.dart';
 import 'package:hiring_app/routes/routes.dart';
-import 'package:hiring_app/screens/auth/auth.dart' as auth;
+import 'package:hiring_app/screens/auth/auth.dart';
 import 'package:hiring_app/screens/candidate/candidate.dart';
 import 'package:hiring_app/utils/colors.dart';
 import 'package:hiring_app/utils/constants.dart';
@@ -19,24 +19,33 @@ class CandidateEditView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<CandidateBloc, CandidateState>(
-        listener: (context, state) {
-          if (state is auth.LoggedOut) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.onboarding,
-              (route) => false,
-            );
-          } else if (state is ProfileSaved) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              Routes.home,
-              (route) => false,
-            );
-          } else if (state is ShowError) {
-            Dialogs.snackBar(context, state.message.toString());
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<AuthBloc, AuthState>(
+            listener: (context, state) {
+              if (state is LoggedOut) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.onboarding,
+                  (route) => false,
+                );
+              }
+            },
+          ),
+          BlocListener<CandidateBloc, CandidateState>(
+            listener: (context, state) {
+              if (state is ProfileSaved) {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Routes.home,
+                  (route) => false,
+                );
+              } else if (state is CandidateError) {
+                Dialogs.snackBar(context, state.message.toString());
+              }
+            },
+          ),
+        ],
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
@@ -59,9 +68,7 @@ class CandidateEditView extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              context
-                                  .read<auth.AuthBloc>()
-                                  .add(const auth.UserLogout());
+                              context.read<AuthBloc>().add(const UserLogout());
                             },
                             icon: const Icon(Icons.power_settings_new),
                             color: AppColors.red,
@@ -186,7 +193,7 @@ class CandidateEditView extends StatelessWidget {
                         },
                         child: BlocBuilder<CandidateBloc, CandidateState>(
                           builder: (context, state) {
-                            return (state is Loading)
+                            return (state is CandidateLoading)
                                 ? const Loader()
                                 : Text(
                                     AppStrings.submit,
